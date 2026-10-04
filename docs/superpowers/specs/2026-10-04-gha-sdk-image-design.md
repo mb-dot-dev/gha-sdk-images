@@ -51,7 +51,12 @@ docs/superpowers/specs/...
   A failure blocks the push.
 
 ## Out of scope
-- Runner-agent image, Dependabot/Renovate for pinned versions, Gitea parity beyond the SDK set.
+- Runner-agent image, Renovate, Gitea parity beyond the SDK set.
+
+## Dependency updates
+Dependabot (`.github/dependabot.yml`, weekly) covers GitHub Actions versions and Docker image references
+in the `Dockerfile` (`ubuntu:24.04` base, uv image). It does not cover the `ARG` pins (SAM CLI, .NET SDKs,
+Python minor); those are bumped by hand.
 
 ## Notes
 - The package is created private on first push. Making it public is a one-time manual step
