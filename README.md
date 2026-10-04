@@ -14,6 +14,9 @@ Image: `ghcr.io/mb-dot-dev/gha-sdk-images`
 
 Exact versions are pinned in the [`Dockerfile`](Dockerfile). Platforms: `linux/amd64`, `linux/arm64`.
 
+Note: without a `global.json`, `dotnet` uses the highest installed SDK, which is the .NET 11 release candidate.
+Add a `global.json` (or use `actions/setup-dotnet`) to select .NET 10.
+
 ## Usage
 
 ```yaml

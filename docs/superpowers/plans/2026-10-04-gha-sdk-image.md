@@ -16,7 +16,7 @@
 - Image name: `ghcr.io/mb-dot-dev/gha-sdk-images`.
 - Usage: job container only; no runner agent in the image. Image runs as root.
 - Platforms: `linux/amd64`, `linux/arm64`.
-- apt packages: `git`, `curl`, `ca-certificates`, `unzip`, `jq`, `sudo`, `tar`, `gzip`, `xz-utils`, `openssh-client` (no recommends, apt lists cleaned).
+- apt packages: `git`, `curl`, `ca-certificates`, `unzip`, `jq`, `libicu74`, `sudo`, `tar`, `gzip`, `xz-utils`, `openssh-client` (no recommends, apt lists cleaned).
 - uv/uvx: `COPY --from=ghcr.io/astral-sh/uv:0.12.22 /uv /uvx /bin/`.
 - Python 3.14 as system Python: `ARG PYTHON_VERSION=3.14`, `uv python install "${PYTHON_VERSION}" --default`, with `UV_PYTHON_INSTALL_DIR=/opt/uv/python` and `UV_PYTHON_BIN_DIR=/usr/local/bin` set as image `ENV` (so `python`, `python3` resolve to `/usr/local/bin` and non-root users can read the interpreter).
 - AWS SAM CLI `1.166.2`; zip chosen by `dpkg --print-architecture` (amd64 -> x86_64, arm64 -> arm64).

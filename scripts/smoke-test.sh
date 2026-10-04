@@ -6,6 +6,13 @@ echo "${sdks}"
 grep -q '^10\.' <<<"${sdks}" || { echo "missing .NET 10 SDK" >&2; exit 1; }
 grep -q '^11\.' <<<"${sdks}" || { echo "missing .NET 11 SDK" >&2; exit 1; }
 
+# --list-sdks only runs the native muxer; these start the runtime (needs ICU) and the compiler
+dotnet --version
+tmp="$(mktemp -d)"
+dotnet new console -o "${tmp}/app" --no-restore >/dev/null
+dotnet build "${tmp}/app" --nologo -v q
+rm -rf "${tmp}"
+
 sam --version
 uv --version
 uvx --version

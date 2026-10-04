@@ -8,6 +8,7 @@ RUN apt-get update \
         git \
         gzip \
         jq \
+        libicu74 \
         openssh-client \
         sudo \
         tar \

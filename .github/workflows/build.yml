@@ -54,11 +54,16 @@ jobs:
           platforms: linux/amd64
           load: true
           tags: smoke:test
+          # Scheduled runs bypass the cache so base-image, apt and Python patch updates are picked up
+          no-cache: ${{ github.event_name == 'schedule' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Smoke test
         run: docker run --rm -v "$PWD/scripts:/scripts:ro" smoke:test bash /scripts/smoke-test.sh
+
+      - name: Smoke test (non-root)
+        run: docker run --rm --user nobody -e HOME=/tmp -v "$PWD/scripts:/scripts:ro" smoke:test bash /scripts/smoke-test.sh
 
       - name: Build and push (amd64 + arm64)
         uses: docker/build-push-action@v7
@@ -66,6 +71,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
+          no-cache: ${{ github.event_name == 'schedule' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

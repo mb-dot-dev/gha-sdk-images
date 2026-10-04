@@ -14,7 +14,7 @@ It mirrors the SDK set of the Gitea runner image (`gitea-action-runner/Dockerfil
 
 ## Image contents
 Base packages via apt (no recommends, apt lists cleaned): `git`, `curl`, `ca-certificates`,
-`unzip`, `jq`, `sudo`, `tar`, `gzip`, `xz-utils`, `openssh-client`.
+`unzip`, `jq`, `libicu74` (required by .NET), `sudo`, `tar`, `gzip`, `xz-utils`, `openssh-client`.
 (`git` is needed so `actions/checkout` does a real clone; the rest are commonly expected by actions and scripts.)
 
 SDKs, all pinned via `ARG`, same as the Gitea image:
