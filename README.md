@@ -35,5 +35,5 @@ jobs:
 - `sha-<short>`: a specific commit
 - `<version>`, `<major>.<minor>`: from `v*` git tags
 
-The image is rebuilt on every push to `main`, weekly (to pick up base image updates), and on manual dispatch.
+The image is rebuilt on every push to `main`, on `v*` tags, and on manual dispatch. Layers are cached, so to pick up new base image, apt or Python patch releases, bump a pinned `ARG` in the `Dockerfile` or clear the Actions cache.
 Pull requests build and test the image without pushing.

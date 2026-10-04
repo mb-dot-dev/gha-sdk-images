@@ -23,7 +23,7 @@ SDKs, all pinned via `ARG`, same as the Gitea image:
   (`python`, `python3`, `python3.14` in `/usr/local/bin`). Interpreters live in a world-readable
   `UV_PYTHON_INSTALL_DIR=/opt/uv/python` (not under `/root`), and `UV_PYTHON_BIN_DIR=/usr/local/bin`.
   Both env vars stay set in the image so uv finds the install at runtime. The pin is the minor
-  version (`3.14`), so the weekly rebuild picks up patch releases.
+  version (`3.14`), so patch releases are picked up whenever that layer is rebuilt.
 - AWS SAM CLI `1.166.2`, zip chosen by `dpkg --print-architecture` (amd64 -> x86_64, arm64 -> arm64)
 - .NET SDK `10.0.401` and `11.0.100-rc.1.26425.128` side by side in `/usr/share/dotnet`,
   `DOTNET_ROOT`, `DOTNET_CLI_TELEMETRY_OPTOUT=1`, `DOTNET_NOLOGO=1`, symlink at `/usr/bin/dotnet`
@@ -39,7 +39,7 @@ docs/superpowers/specs/...
 ```
 
 ## Build and publish workflow
-- Triggers: push to `main`, tags `v*`, weekly schedule (base image updates), `workflow_dispatch`,
+- Triggers: push to `main`, tags `v*`, `workflow_dispatch`,
   and `pull_request` (build and test only, no push).
 - Permissions: `contents: read`, `packages: write`.
 - Steps: checkout, QEMU, Buildx, login to GHCR with `GITHUB_TOKEN` (skipped on PRs),

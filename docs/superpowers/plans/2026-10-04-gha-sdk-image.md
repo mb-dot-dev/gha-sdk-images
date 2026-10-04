@@ -21,7 +21,7 @@
 - Python 3.14 as system Python: `ARG PYTHON_VERSION=3.14`, `uv python install "${PYTHON_VERSION}" --default`, with `UV_PYTHON_INSTALL_DIR=/opt/uv/python` and `UV_PYTHON_BIN_DIR=/usr/local/bin` set as image `ENV` (so `python`, `python3` resolve to `/usr/local/bin` and non-root users can read the interpreter).
 - AWS SAM CLI `1.166.2`; zip chosen by `dpkg --print-architecture` (amd64 -> x86_64, arm64 -> arm64).
 - .NET SDKs `10.0.401` and `11.0.100-rc.1.26425.128` side by side in `/usr/share/dotnet`; `DOTNET_ROOT=/usr/share/dotnet`, `DOTNET_CLI_TELEMETRY_OPTOUT=1`, `DOTNET_NOLOGO=1`; symlink `/usr/bin/dotnet`.
-- Workflow triggers: push to `main`, tags `v*`, weekly schedule, `workflow_dispatch`, `pull_request` (build and test only, no push).
+- Workflow triggers: push to `main`, tags `v*`, `workflow_dispatch`, `pull_request` (build and test only, no push).
 - Workflow permissions: `contents: read`, `packages: write`.
 - Tags: `latest` on main, `sha-<short>`, semver from `v*` tags. OCI source label links the package to the repo.
 - Smoke test runs `dotnet --list-sdks`, `sam --version`, `uv --version`, `python --version`, `git --version` and blocks the push on failure.
@@ -202,8 +202,6 @@ on:
     branches: [main]
     tags: ["v*"]
   pull_request:
-  schedule:
-    - cron: "0 4 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -330,7 +328,7 @@ jobs:
 - `sha-<short>`: a specific commit
 - `<version>`, `<major>.<minor>`: from `v*` git tags
 
-The image is rebuilt on every push to `main`, weekly (to pick up base image updates), and on manual dispatch.
+The image is rebuilt on every push to `main`, on `v*` tags, and on manual dispatch. Layers are cached, so to pick up new base image, apt or Python patch releases, bump a pinned `ARG` in the `Dockerfile` or clear the Actions cache.
 Pull requests build and test the image without pushing.
 ````
 
