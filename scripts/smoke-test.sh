@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+sdks="$(dotnet --list-sdks)"
+echo "${sdks}"
+grep -q '^10\.' <<<"${sdks}" || { echo "missing .NET 10 SDK" >&2; exit 1; }
+grep -q '^11\.' <<<"${sdks}" || { echo "missing .NET 11 SDK" >&2; exit 1; }
+
+sam --version
+uv --version
+uvx --version
+git --version
+jq --version
+
+# uv-managed Python is the system Python
+[[ "$(command -v python)" == /usr/local/bin/python ]] || { echo "python is not /usr/local/bin/python" >&2; exit 1; }
+[[ "$(python --version)" == "Python 3.14."* ]] || { echo "python is not 3.14" >&2; exit 1; }
+[[ "$(python3 --version)" == "Python 3.14."* ]] || { echo "python3 is not 3.14" >&2; exit 1; }
+python -c 'import ssl, sqlite3, zlib'
