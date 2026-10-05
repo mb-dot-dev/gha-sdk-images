@@ -13,6 +13,9 @@ dotnet new console -o "${tmp}/app" --no-restore >/dev/null
 dotnet build "${tmp}/app" --nologo -v q
 rm -rf "${tmp}"
 
+# the scanner has no --version flag: it prints its banner and exits 1 without a command
+sonar_out="$(dotnet sonarscanner 2>&1 || true)"
+grep -q "SonarScanner for .NET" <<<"${sonar_out}" || { echo "dotnet sonarscanner not working" >&2; exit 1; }
 sam --version
 uv --version
 uvx --version
