@@ -63,4 +63,4 @@ ENV DOTNET_TOOLS_DIR=/opt/dotnet-tools
 ENV PATH="${DOTNET_TOOLS_DIR}:${PATH}"
 RUN dotnet tool install dotnet-sonarscanner --version "${DOTNET_SONARSCANNER_VERSION}" --tool-path "${DOTNET_TOOLS_DIR}" \
     && chmod -R a+rX "${DOTNET_TOOLS_DIR}" \
-    && dotnet sonarscanner --version
+    && (dotnet sonarscanner 2>&1 || true) | grep -q "SonarScanner for .NET"
