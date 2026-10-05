@@ -13,6 +13,7 @@ dotnet new console -o "${tmp}/app" --no-restore >/dev/null
 dotnet build "${tmp}/app" --nologo -v q
 rm -rf "${tmp}"
 
+dotnet sonarscanner --version
 sam --version
 uv --version
 uvx --version

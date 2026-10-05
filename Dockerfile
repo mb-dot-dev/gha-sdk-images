@@ -55,3 +55,12 @@ RUN curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
     && rm /tmp/dotnet-install.sh \
     && ln -sf "${DOTNET_ROOT}/dotnet" /usr/bin/dotnet \
     && dotnet --list-sdks
+
+# Install SonarScanner for .NET (pinned) as a dotnet tool in a world-readable dir on PATH,
+# so `dotnet sonarscanner` works for any user without `dotnet tool install` in the job
+ARG DOTNET_SONARSCANNER_VERSION=11.3.0
+ENV DOTNET_TOOLS_DIR=/opt/dotnet-tools
+ENV PATH="${DOTNET_TOOLS_DIR}:${PATH}"
+RUN dotnet tool install dotnet-sonarscanner --version "${DOTNET_SONARSCANNER_VERSION}" --tool-path "${DOTNET_TOOLS_DIR}" \
+    && chmod -R a+rX "${DOTNET_TOOLS_DIR}" \
+    && dotnet sonarscanner --version
