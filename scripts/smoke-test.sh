@@ -24,6 +24,6 @@ jq --version
 
 # uv-managed Python is the system Python
 [[ "$(command -v python)" == /usr/local/bin/python ]] || { echo "python is not /usr/local/bin/python" >&2; exit 1; }
-[[ "$(python --version)" == "Python 3.14."* ]] || { echo "python is not 3.14" >&2; exit 1; }
-[[ "$(python3 --version)" == "Python 3.14."* ]] || { echo "python3 is not 3.14" >&2; exit 1; }
+[[ "$(python --version)" == "Python 3.15."* ]] || { echo "python is not 3.15" >&2; exit 1; }
+[[ "$(python3 --version)" == "Python 3.15."* ]] || { echo "python3 is not 3.15" >&2; exit 1; }
 python -c 'import ssl, sqlite3, zlib'
