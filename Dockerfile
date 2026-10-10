@@ -17,12 +17,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv / uvx from the official Astral image
-COPY --from=ghcr.io/astral-sh/uv:0.12.22 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.13.0 /uv /uvx /bin/
 
 # Install Python as the system Python via uv.
 # Interpreters go to a world-readable dir (not /root) and the python/python3
 # executables to /usr/local/bin; both env vars stay set so uv finds them at runtime.
-ARG PYTHON_VERSION=3.14
+ARG PYTHON_VERSION=3.15
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python \
     UV_PYTHON_BIN_DIR=/usr/local/bin
 RUN uv python install "${PYTHON_VERSION}" --default \
