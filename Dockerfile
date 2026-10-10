@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 # Base tooling that GitHub Actions steps commonly expect in a job container
 RUN apt-get update \
