@@ -21,6 +21,7 @@ uv --version
 uvx --version
 git --version
 jq --version
+gpg --version
 
 # uv-managed Python is the system Python
 [[ "$(command -v python)" == /usr/local/bin/python ]] || { echo "python is not /usr/local/bin/python" >&2; exit 1; }

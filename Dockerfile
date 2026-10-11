@@ -7,6 +7,7 @@ RUN apt-get update \
         ca-certificates \
         curl \
         git \
+        gpg \
         gzip \
         jq \
         libicu74 \
