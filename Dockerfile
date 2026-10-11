@@ -6,6 +6,7 @@ RUN apt-get update \
         build-essential \
         ca-certificates \
         curl \
+        dirmngr \
         git \
         gpg \
         gzip \
