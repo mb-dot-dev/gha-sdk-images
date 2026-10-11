@@ -11,6 +11,7 @@ RUN apt-get update \
         gpg \
         gzip \
         jq \
+        libffi-dev \
         libicu74 \
         make \
         openssh-client \
