@@ -12,7 +12,7 @@ RUN apt-get update \
         gzip \
         jq \
         libffi-dev \
-        libicu74 \
+        libicu78 \
         make \
         openssh-client \
         sudo \
