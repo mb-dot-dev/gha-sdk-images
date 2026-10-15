@@ -23,7 +23,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv / uvx from the official Astral image
-COPY --from=ghcr.io/astral-sh/uv:0.13.0 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /uvx /bin/
 
 # Install Python as the system Python via uv.
 # Interpreters go to a world-readable dir (not /root) and the python/python3
@@ -36,7 +36,7 @@ RUN uv python install "${PYTHON_VERSION}" --default \
     && python --version
 
 # Install AWS SAM CLI (pinned), arch-matched
-ARG SAM_CLI_VERSION=1.166.2
+ARG SAM_CLI_VERSION=1.169.0
 RUN case "$(dpkg --print-architecture)" in \
         amd64) sam_arch=x86_64 ;; \
         arm64) sam_arch=arm64 ;; \
@@ -50,7 +50,7 @@ RUN case "$(dpkg --print-architecture)" in \
 
 # Install .NET SDKs 10 and 11 (pinned), side by side
 ARG DOTNET_10_SDK_VERSION=10.0.401
-ARG DOTNET_11_SDK_VERSION=11.0.100-rc.1.26425.128
+ARG DOTNET_11_SDK_VERSION=11.0.100-rc.2.26504.105
 ENV DOTNET_ROOT=/usr/share/dotnet \
     DOTNET_CLI_TELEMETRY_OPTOUT=1 \
     DOTNET_NOLOGO=1
