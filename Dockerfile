@@ -49,7 +49,7 @@ RUN case "$(dpkg --print-architecture)" in \
     && sam --version
 
 # Install .NET SDKs 10 and 11 (pinned), side by side
-ARG DOTNET_10_SDK_VERSION=10.0.401
+ARG DOTNET_10_SDK_VERSION=10.0.402
 ARG DOTNET_11_SDK_VERSION=11.0.100-rc.2.26504.105
 ENV DOTNET_ROOT=/usr/share/dotnet \
     DOTNET_CLI_TELEMETRY_OPTOUT=1 \
