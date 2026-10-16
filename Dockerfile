@@ -48,17 +48,17 @@ RUN case "$(dpkg --print-architecture)" in \
     && rm -rf /tmp/sam.zip /tmp/sam-installation \
     && sam --version
 
-# Install .NET SDKs 10 and 11 (pinned), side by side
+# Install .NET SDKs 10 and 11 (pinned), side by side, using dotnetup into a system-wide root
 ARG DOTNET_10_SDK_VERSION=10.0.402
 ARG DOTNET_11_SDK_VERSION=11.0.100-rc.2.26504.105
-ENV DOTNET_ROOT=/usr/share/dotnet \
+ENV DOTNET_ROOT=/usr/local/dotnet \
     DOTNET_CLI_TELEMETRY_OPTOUT=1 \
     DOTNET_NOLOGO=1
-RUN curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
-    && chmod +x /tmp/dotnet-install.sh \
-    && /tmp/dotnet-install.sh --version "${DOTNET_10_SDK_VERSION}" --install-dir "${DOTNET_ROOT}" \
-    && /tmp/dotnet-install.sh --version "${DOTNET_11_SDK_VERSION}" --install-dir "${DOTNET_ROOT}" \
-    && rm /tmp/dotnet-install.sh \
+RUN curl -fsSL https://aka.ms/dotnetup/get-dotnetup.sh | bash \
+    && ~/.dotnetup/dotnetup install "${DOTNET_10_SDK_VERSION}" "${DOTNET_11_SDK_VERSION}" \
+        --install-path "${DOTNET_ROOT}" --interactive false --no-progress \
+    && rm -rf ~/.dotnetup \
+    && chmod -R a+rX "${DOTNET_ROOT}" \
     && ln -sf "${DOTNET_ROOT}/dotnet" /usr/bin/dotnet \
     && dotnet --list-sdks
 
