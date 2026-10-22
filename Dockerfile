@@ -48,6 +48,19 @@ RUN case "$(dpkg --print-architecture)" in \
     && rm -rf /tmp/sam.zip /tmp/sam-installation \
     && sam --version
 
+# Install AWS CLI v2 (pinned), arch-matched
+ARG AWS_CLI_VERSION=2.38.4
+RUN case "$(dpkg --print-architecture)" in \
+        amd64) aws_arch=x86_64 ;; \
+        arm64) aws_arch=aarch64 ;; \
+        *) echo "unsupported architecture" >&2; exit 1 ;; \
+    esac \
+    && curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-${aws_arch}-${AWS_CLI_VERSION}.zip" -o /tmp/awscli.zip \
+    && unzip -q /tmp/awscli.zip -d /tmp/awscli \
+    && /tmp/awscli/aws/install \
+    && rm -rf /tmp/awscli.zip /tmp/awscli \
+    && aws --version
+
 # Install .NET SDKs 10 and 11 (pinned), side by side, using dotnetup into a system-wide root
 ARG DOTNET_10_SDK_VERSION=10.0.402
 ARG DOTNET_11_SDK_VERSION=11.0.100-rc.2.26504.105
