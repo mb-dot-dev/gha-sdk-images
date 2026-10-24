@@ -29,3 +29,8 @@ dirmngr --version
 [[ "$(python --version)" == "Python 3.15."* ]] || { echo "python is not 3.15" >&2; exit 1; }
 [[ "$(python3 --version)" == "Python 3.15."* ]] || { echo "python3 is not 3.15" >&2; exit 1; }
 python -c 'import ssl, sqlite3, zlib'
+
+# canary build (needed for `bun lint`)
+bun --version
+bunx --version
+[[ "$(bun --revision)" == *canary* ]] || { echo "bun is not a canary build" >&2; exit 1; }

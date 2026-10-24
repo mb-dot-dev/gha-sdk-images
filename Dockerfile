@@ -83,3 +83,17 @@ ENV PATH="${DOTNET_TOOLS_DIR}:${PATH}"
 RUN dotnet tool install dotnet-sonarscanner --version "${DOTNET_SONARSCANNER_VERSION}" --tool-path "${DOTNET_TOOLS_DIR}" \
     && chmod -R a+rX "${DOTNET_TOOLS_DIR}" \
     && (dotnet sonarscanner 2>&1 || true) | grep -q "SonarScanner for .NET"
+
+# Install Bun canary (the `canary` release tag is rebuilt continuously, so this is not pinned;
+# `bun lint` only exists in canary builds), arch-matched, into /usr/local/bin
+RUN case "$(dpkg --print-architecture)" in \
+        amd64) bun_arch=x64 ;; \
+        arm64) bun_arch=aarch64 ;; \
+        *) echo "unsupported architecture" >&2; exit 1 ;; \
+    esac \
+    && curl -fsSL "https://github.com/oven-sh/bun/releases/download/canary/bun-linux-${bun_arch}.zip" -o /tmp/bun.zip \
+    && unzip -q /tmp/bun.zip -d /tmp/bun \
+    && install -m 0755 "/tmp/bun/bun-linux-${bun_arch}/bun" /usr/local/bin/bun \
+    && ln -sf bun /usr/local/bin/bunx \
+    && rm -rf /tmp/bun.zip /tmp/bun \
+    && bun --version
