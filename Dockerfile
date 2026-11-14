@@ -36,7 +36,7 @@ RUN uv python install "${PYTHON_VERSION}" --default \
     && python --version
 
 # Install AWS SAM CLI (pinned), arch-matched
-ARG SAM_CLI_VERSION=1.170.0
+ARG SAM_CLI_VERSION=1.171.0
 RUN case "$(dpkg --print-architecture)" in \
         amd64) sam_arch=x86_64 ;; \
         arm64) sam_arch=arm64 ;; \
@@ -49,7 +49,7 @@ RUN case "$(dpkg --print-architecture)" in \
     && sam --version
 
 # Install AWS CLI v2 (pinned), arch-matched
-ARG AWS_CLI_VERSION=2.39.0
+ARG AWS_CLI_VERSION=2.39.6
 RUN case "$(dpkg --print-architecture)" in \
         amd64) aws_arch=x86_64 ;; \
         arm64) aws_arch=aarch64 ;; \
@@ -62,8 +62,8 @@ RUN case "$(dpkg --print-architecture)" in \
     && aws --version
 
 # Install .NET SDKs 10 and 11 (pinned), side by side, using dotnetup into a system-wide root
-ARG DOTNET_10_SDK_VERSION=10.0.403
-ARG DOTNET_11_SDK_VERSION=11.0.100-rc.3.26522.148
+ARG DOTNET_10_SDK_VERSION=10.0.404
+ARG DOTNET_11_SDK_VERSION=11.0.100
 ENV DOTNET_ROOT=/usr/local/dotnet \
     DOTNET_CLI_TELEMETRY_OPTOUT=1 \
     DOTNET_NOLOGO=1
